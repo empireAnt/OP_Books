@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href = "styles.css">
+    <link rel = "stylesheet" href = "style.css">
     <script src = "books.js" defer></script>
     <title>My Library</title>
 </head>
@@ -12,8 +12,14 @@
         <h1>My Library</h1>
         <button type="button" id="open-form-button">+ Add Book</button>
     </header>
+    
     <main class = "book-collection">
-        
+        <template id="book-card-template">
+            <div class="book-card">
+                <h3 class="book-title"></h3>
+                <p class="book-author"></p>
+            </div>
+        </template>
     </main>
 
     <dialog id="book-dialog">

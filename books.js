@@ -1,7 +1,8 @@
 const myLibrary = [];
 
 //constructor
-function Book(title, author) {
+function Book(id, title, author) {
+    this.id = id;
     this.title = title;
     this.author = author;
     //this.pages = pages;
@@ -14,13 +15,38 @@ function Book(title, author) {
 
 
 function addBookToLibrary(title, author) {
-    const newBook = new Book(title, author)
-    myLibrary.push(newBook)
+    const id = crypto.randomUUID(); // Generate a unique ID for the book
+    const newBook = new Book(id, title, author);
+    myLibrary.push(newBook);
+    displayBook(newBook); // Display the newly added book
+}
+
+function displayBook(book) {
+    const bookCollection = document.querySelector('.book-collection');
+    const template = document.getElementById('book-card-template');
+    const bookCard = template.content.cloneNode(true);
+    bookCard.querySelector('.book-title').textContent = book.title  //fillo i dati
+    bookCard.querySelector('.book-author').textContent = book.author
+    bookCollection.append(bookCard)
 }
 
 
+function displayBooks() {
+    const bookCollection = document.querySelector('.book-collection');
+    const template = document.getElementById('book-collection-template');
+
+    //bookCollection.innerHTML = ''; //clears to avoid duplicates (better way to do this?)
+
+    myLibrary.forEach((book) => {
+        const bookCard = template.content.cloneNode(true); //crea working copy fresh del template
+        bookCard.querySelector('.book-title').textContent = book.title  //fillo i dati
+        bookCard.querySelector('.book-author').textContent = book.author
+        bookCollection.append(bookCard)
+    });
+}
+
 //bind page elements
-const openFormButton = document.getElementById('open-form-button')
+const openFormButton = document.getElementById('open-form-button');
 const bookForm = document.getElementById('book-form');
 const bookDialog = document.getElementById('book-dialog');
 
@@ -33,7 +59,7 @@ openFormButton.addEventListener('click', () => {
 bookForm.addEventListener('submit', (e) => {
 
     // create book logic
-    addBookToLibrary(bookForm.title.value, bookForm.author.value)
+    addBookToLibrary(bookForm.title.value, bookForm.author.value);
 
     // 3. Stop the browser from refreshing the page
     e.preventDefault();
@@ -43,7 +69,8 @@ bookForm.addEventListener('submit', (e) => {
     
     // (Optional) Clear the form inputs for next time
     bookForm.reset();
+
 });
 
 
-console.log("SONO LINKATO A BOOKS.JS")
+console.log("SONO LINKATO A BOOKS.JS");
